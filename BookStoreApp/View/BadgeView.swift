@@ -9,9 +9,12 @@ import UIKit
 
 final class BadgeView: UICollectionReusableView {
     static let reuseIdentifier = "BadgeView"
+    
+    //MARK: - Private Methods
     private var badgeLabel = UILabel()
     private var book: Book?
     
+    //MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -26,7 +29,7 @@ final class BadgeView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    //MARK: - Methods
     func configureBadge(with badge: String) {
         isHidden = false
         badgeLabel.text = "New"
@@ -44,6 +47,5 @@ private extension BadgeView {
         badgeLabel.layer.cornerRadius = 4
         badgeLabel.layer.masksToBounds = true
         addSubview(badgeLabel)
-        
     }
 }

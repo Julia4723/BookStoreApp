@@ -8,12 +8,12 @@
 import UIKit
 
 final class CustomCollectionViewCell: UICollectionViewCell {
-    
+    //MARK: - Private Methods
     private let titleLabel = UILabel()
     private let image = UIImageView()
-    
     private var book: Book?
     
+    //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -31,6 +31,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         self.book = books
     }
     
+    //MARK: - Methods
     func configure(with book: Book) {
         contentView.backgroundColor = .clear
         titleLabel.text = book.title
@@ -39,7 +40,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
 }
 
 
-
+//MARK: - Settings
 extension CustomCollectionViewCell {
     private func setupViews() {
         contentView.addSubview(titleLabel)
@@ -55,7 +56,7 @@ extension CustomCollectionViewCell {
     }
 }
 
-
+//MARK: - Layout
 extension CustomCollectionViewCell {
     func setupLayout() {
         image.translatesAutoresizingMaskIntoConstraints = false

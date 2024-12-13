@@ -13,14 +13,16 @@ struct ElementKind {
 }
 
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
+    //MARK: - Private Methods
     private let reuseIdentifier = "reuseIdentifierCell"
     private var collectionView: UICollectionView!
     
     var bookManager: IBookTypeManager?
     private var booksArray: [BookType] = []
     
+    //MARK: - Init
     init(bookManager: IBookTypeManager) {
         self.bookManager = bookManager
         super.init(nibName: nil, bundle: nil)
@@ -30,6 +32,8 @@ class ViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -37,6 +41,7 @@ class ViewController: UIViewController {
         getBooks()
     }
     
+    //MARK: - Methods
     func getBooks() {
         guard let manager = bookManager else { return }
         booksArray = manager.getBookTypes()
@@ -45,7 +50,7 @@ class ViewController: UIViewController {
     
 }
 
-
+//MARK: - SetupView
 private extension ViewController {
     func setupView() {
         let layout = createLayout()
@@ -67,7 +72,7 @@ private extension ViewController {
     }
 }
 
-
+//MARK: - Create Layout
 private extension ViewController {
     func createLayout() -> UICollectionViewLayout {
         
@@ -91,7 +96,6 @@ private extension ViewController {
             relativeHeight: 0.5
         )
         
-        
         let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [supplementaryItem])
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
@@ -99,7 +103,6 @@ private extension ViewController {
             relativeWidth: 1,
             relativeHeight: 0.3
         )
-        
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
@@ -148,7 +151,7 @@ private extension ViewController {
     }
 }
 
-
+//MARK: - UICollectionViewDataSource
 extension ViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
