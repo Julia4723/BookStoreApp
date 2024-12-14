@@ -76,21 +76,8 @@ private extension ViewController {
 private extension ViewController {
     func createLayout() -> UICollectionViewLayout {
         
-        let supplementaryItemSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(70),
-            heightDimension: .absolute(22)
-        )
+        let supplementaryItem = createSupplementaryItems()
         
-        let constraints = NSCollectionLayoutAnchor(
-            edges: [.top, .leading],
-            absoluteOffset: CGPoint(x: 0, y: -22)
-        )
-        
-        let supplementaryItem = NSCollectionLayoutSupplementaryItem(
-            layoutSize: supplementaryItemSize,
-            elementKind: ElementKind.badge,
-            containerAnchor: constraints
-        )
         let itemSize = createItemSize(
             relativeWidth: 0.5,
             relativeHeight: 0.5
@@ -106,29 +93,44 @@ private extension ViewController {
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
+        let header = createHeader()
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 40, trailing: 10)
+        section.orthogonalScrollingBehavior = .continuous
+        section.boundarySupplementaryItems = [header]
+
+        return UICollectionViewCompositionalLayout(section: section)
+        
+    }
+    
+    func createSupplementaryItems() -> NSCollectionLayoutSupplementaryItem {
+        let supplementaryItemSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(70),
+            heightDimension: .absolute(22)
+        )
+        
+        let constraints = NSCollectionLayoutAnchor(
+            edges: [.top, .leading],
+            absoluteOffset: CGPoint(x: 0, y: -22)
+        )
+        
+        let supplementaryItem = NSCollectionLayoutSupplementaryItem(
+            layoutSize: supplementaryItemSize,
+            elementKind: ElementKind.badge,
+            containerAnchor: constraints
+        )
+        return supplementaryItem
+    }
+    
+    func createHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .absolute(60)
         )
         
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-        
-        let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: ElementKind.background)
-        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
-            top: 5,
-            leading: 5,
-            bottom: 5,
-            trailing: 5
-        )
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 40, trailing: 10)
-        section.orthogonalScrollingBehavior = .continuous
-        section.boundarySupplementaryItems = [header]
-        section.decorationItems = [sectionBackgroundDecoration]
-        
-        return UICollectionViewCompositionalLayout(section: section)
-        
+        return header
     }
     
     func createItemSize(relativeWidth: Double, relativeHeight: Double) -> NSCollectionLayoutSize {
