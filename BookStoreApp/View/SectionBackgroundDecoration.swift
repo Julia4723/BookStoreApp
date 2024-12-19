@@ -13,7 +13,7 @@ final class SectionBackgroundDecoration: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        configure()
     }
     
     required init?(coder: NSCoder) {
@@ -21,3 +21,12 @@ final class SectionBackgroundDecoration: UICollectionReusableView {
     }
 }
 
+
+private extension SectionBackgroundDecoration {
+    func configure() {
+        backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        layer.borderColor = UIColor.black.cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = 12
+    }
+}

@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum Scene {
+    case viewController
+    case sectionProvider
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -15,8 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let booksType = BookTypeManager()
-        window?.rootViewController = ViewController(bookManager: booksType)
+        
+        window?.rootViewController = assembly(scene: .sectionProvider)
         window?.makeKeyAndVisible()
         
     }
@@ -47,3 +52,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+
+extension SceneDelegate {
+    func assembly(scene: Scene) -> UIViewController {
+        let booksType = BookTypeManager()
+        switch scene {
+        case .viewController:
+            return ViewController(bookManager: booksType)
+        case .sectionProvider:
+            return MultipleSectionsViewController()
+        }
+    }
+}
