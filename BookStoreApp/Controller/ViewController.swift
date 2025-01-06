@@ -18,6 +18,7 @@ final class ViewController: UIViewController {
     //MARK: - Private Methods
     private let reuseIdentifier = "reuseIdentifierCell"
     private var collectionView: UICollectionView!
+    private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Book>!
     
     var bookManager: IBookTypeManager?
     private var booksArray: [BookType] = []
@@ -195,4 +196,54 @@ extension ViewController: UICollectionViewDataSource {
         }
         return UICollectionReusableView()
     }
+}
+
+
+extension ViewController {
+    func configureDataSource() {
+        diffableDataSource = UICollectionViewDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath)
+            cell.contentView.backgroundColor = indexPath.section == 0 ? .systemRed : .systemGray
+            
+            return cell
+        }
+        
+        diffableDataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            
+            if kind == UICollectionView.elementKindSectionHeader {
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
+                let bookType = self.booksArray[indexPath.section]
+                header.configure(bookType: bookType)
+                return header
+            } else if kind == ElementKind.badge {
+                let badge = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BadgeView.reuseIdentifier, for: indexPath) as! BadgeView
+                
+                let bookType = self.booksArray[indexPath.section]
+                let book = bookType.books[indexPath.row]
+                
+                if book.isNew {
+                    badge.configureBadge(with: "New")
+                } else {
+                    badge.isHidden = true
+                }
+                return badge
+            }
+            return UICollectionReusableView()
+        }
+    }
+    
+    func applyInitialData() {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, Book>()
+       
+        let sections = Array(0..<booksArray.count)
+        snapshot.appendSections(sections)
+        
+        
+        for (sectionIndex, bookType) in booksArray.enumerated() {
+            snapshot.appendItems(bookType.books, toSection: sectionIndex)
+        }
+        
+        diffableDataSource.apply(snapshot, animatingDifferences: false)
+     }
+
 }
