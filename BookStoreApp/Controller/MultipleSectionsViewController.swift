@@ -52,6 +52,7 @@ private extension MultipleSectionsViewController {
 
 
 private extension MultipleSectionsViewController {
+    
     func createLayout() -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { sectionIndex, enviroment in
             
@@ -210,3 +211,5 @@ extension MultipleSectionsViewController: UICollectionViewDataSource {
         return UICollectionViewCell()
     }
 }
+
+
