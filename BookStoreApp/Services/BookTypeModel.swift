@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct BookType {
+struct BookType: Hashable {
     let type: String
     let books: [Book]
 }
