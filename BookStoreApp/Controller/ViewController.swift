@@ -5,6 +5,7 @@
 //  Created by user on 12.12.2024.
 //
 
+
 import UIKit
 
 struct ElementKind {
@@ -38,17 +39,48 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        
         configureCollectionView()
         getBooks()
+        setupNavigationBar()
         configureDataSource()
         applyInitialData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
     //MARK: - Methods
-    func getBooks() {
+    
+    private func setupNavigationBar() {
+        navigationItem.title = "Мои книги"
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .clear
+        
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.systemFont(ofSize: 18, weight: .bold)
+        ]
+        
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.systemFont(ofSize: 34, weight: .bold)
+        ]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    
+    private func getBooks() {
         guard let manager = bookManager else { return }
         booksArray = manager.getBookTypes()
-        //collectionView.reloadData()
     }
     
 }
@@ -69,7 +101,7 @@ private extension ViewController {
         collectionView.register(BadgeView.self, forSupplementaryViewOfKind: ElementKind.badge, withReuseIdentifier: BadgeView.reuseIdentifier)
         
         collectionView.backgroundColor = .black
-        //collectionView.dataSource = self
+        collectionView.delegate = self
         
         view.addSubview(collectionView)
     }
@@ -156,50 +188,6 @@ private extension ViewController {
     }
 }
 
-//MARK: - UICollectionViewDataSource
-//extension ViewController: UICollectionViewDataSource {
-    
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//         booksArray[section].books.count
-//    }
-//    
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return booksArray.count
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CustomCollectionViewCell else { return UICollectionViewCell()}
-//        
-//        let bookType = booksArray[indexPath.section]
-//        let book = bookType.books[indexPath.row]
-//        cell.configure(with: book)
-//        return cell
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        
-//        if kind == UICollectionView.elementKindSectionHeader {
-//            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
-//            let bookType = booksArray[indexPath.section]
-//            header.configure(bookType: bookType)
-//            return header
-//        } else if kind == ElementKind.badge {
-//            let badge = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BadgeView.reuseIdentifier, for: indexPath) as! BadgeView
-//            
-//            let bookType = booksArray[indexPath.section]
-//            let book = bookType.books[indexPath.row]
-//            
-//            if book.isNew {
-//                badge.configureBadge(with: "New")
-//            } else {
-//                badge.isHidden = true
-//            }
-//            return badge
-//        }
-//        return UICollectionReusableView()
-//    }
-//}
-
 
 extension ViewController {
     func configureDataSource() {
@@ -250,3 +238,24 @@ extension ViewController {
      }
 
 }
+
+extension ViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        let bookType = booksArray[indexPath.section]
+        let book = bookType.books[indexPath.row]
+        
+        let detailVC = DetailViewController()
+        detailVC.book = book
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
+
+//
+//#Preview(traits: .portrait) {
+//     
+//        let booksType = BookTypeManager()
+//        ViewController(bookManager: booksType)
+//    
+//}
