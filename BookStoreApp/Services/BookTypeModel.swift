@@ -15,5 +15,6 @@ struct BookType: Hashable {
 struct Book: Hashable {
     let image: String
     let title: String
+    let description: String
     var isNew = false
 }
