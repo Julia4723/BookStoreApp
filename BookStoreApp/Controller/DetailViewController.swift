@@ -11,11 +11,11 @@ import UIKit
 class DetailViewController: UIViewController {
     
     //MARK: - Property
-    var image = UIImageView()
-    var titleLabel = UILabel()
-    var descriptionLabel = UILabel()
-    var book: Book? // Передаваемая книга
-    var toggleHeart: Bool = false
+    private let image = UIImageView()
+    private let titleLabel = UILabel()
+    private let descriptionLabel = UILabel()
+    var book: Book? = nil // Передаваемая книга
+    private var toggleHeart: Bool = false
     
     
     
@@ -37,15 +37,6 @@ class DetailViewController: UIViewController {
             action: #selector(favoriteButtonTapped)
         )
         
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .clear
-        
-        appearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white,
-            .font: UIFont.systemFont(ofSize: 18, weight: .bold)
-        ]
-        navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.tintColor = .white
         navigationItem.rightBarButtonItem?.tintColor = .red
         navigationController?.navigationBar.prefersLargeTitles = false
