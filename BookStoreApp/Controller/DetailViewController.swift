@@ -27,6 +27,8 @@ class DetailViewController: UIViewController {
         setupViews()
     }
     
+    
+    //MARK: - Methods
     private func setupNavigationBar() {
         navigationItem.title = book?.title
         
@@ -44,7 +46,6 @@ class DetailViewController: UIViewController {
     }
     
     @objc func favoriteButtonTapped() {
-        
         let heart = toggleHeart ? "heart" : "heart.fill"
         navigationItem.rightBarButtonItem?.image = UIImage(systemName: heart)
         toggleHeart.toggle()
@@ -52,7 +53,7 @@ class DetailViewController: UIViewController {
     }
 }
 
-
+//MARK: - Settings
 extension DetailViewController {
    func setupViews() {
        setupImage()

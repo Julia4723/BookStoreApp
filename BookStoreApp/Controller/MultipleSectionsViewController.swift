@@ -8,9 +8,11 @@
 import UIKit
 
 final class MultipleSectionsViewController: UIViewController {
+    //MARK: - Private property
     private let reuseIdentifier = "reuseIdentifier"
     private var collectionView: UICollectionView!
     
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -20,7 +22,7 @@ final class MultipleSectionsViewController: UIViewController {
     }
 }
 
-
+//MARK: - Setup View
 private extension MultipleSectionsViewController {
     func setupView() {
         let layout = createLayout()
@@ -50,7 +52,7 @@ private extension MultipleSectionsViewController {
     }
 }
 
-
+//MARK: - Layout settings
 private extension MultipleSectionsViewController {
     
     func createLayout() -> UICollectionViewLayout {
@@ -167,7 +169,7 @@ private extension MultipleSectionsViewController {
     }
 }
 
-
+//MARK: - UICollectionViewDataSource
 extension MultipleSectionsViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

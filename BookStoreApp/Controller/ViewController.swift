@@ -61,7 +61,7 @@ final class ViewController: UIViewController {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .clear
+        appearance.backgroundColor = .black
         
         appearance.titleTextAttributes = [
             .foregroundColor: UIColor.white,
@@ -161,7 +161,7 @@ private extension ViewController {
     func createHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(60)
+            heightDimension: .absolute(100)
         )
         
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
