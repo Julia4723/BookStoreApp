@@ -61,7 +61,7 @@ final class ViewController: UIViewController {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .clear
+        appearance.backgroundColor = .black
         
         appearance.titleTextAttributes = [
             .foregroundColor: UIColor.white,
