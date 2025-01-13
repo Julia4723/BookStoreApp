@@ -15,6 +15,7 @@ class SectionHeaderView2: UICollectionReusableView {
         super.init(frame: frame)
         label.frame = bounds
         label.textAlignment = .left
+        label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 16)
         addSubview(label)
         setupLayout()
@@ -35,7 +36,7 @@ extension SectionHeaderView2 {
         
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 40),
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
         ])
     }

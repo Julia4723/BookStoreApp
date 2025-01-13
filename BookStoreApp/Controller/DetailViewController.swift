@@ -29,6 +29,7 @@ class DetailViewController: UIViewController {
     
     
     //MARK: - Methods
+    
     private func setupNavigationBar() {
         navigationItem.title = book?.title
         

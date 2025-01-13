@@ -15,10 +15,35 @@ final class MultipleSectionsViewController: UIViewController {
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .black
         setupView()
-        
+        setupNavigationBar()
         configureCollectionView()
         
+    }
+    
+    //MARK: - Methods
+    private func setupNavigationBar() {
+        navigationItem.title = "Поиск"
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .black
+        
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.systemFont(ofSize: 18, weight: .bold)
+        ]
+        
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.systemFont(ofSize: 34, weight: .bold)
+        ]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
 }
 
@@ -45,7 +70,7 @@ private extension MultipleSectionsViewController {
             withReuseIdentifier: SectionHeaderView2.reuseIdentifier
         )
         
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .black
         collectionView.dataSource = self
         
         view.addSubview(collectionView)
@@ -163,7 +188,7 @@ private extension MultipleSectionsViewController {
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
